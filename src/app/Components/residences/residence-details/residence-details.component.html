@@ -1,0 +1,66 @@
+<div class="residence-details">
+    <h1>Residence Details</h1>
+  
+    <!-- Check if a residence is selected -->
+    <div *ngIf="selectedResidence; else noResidence">
+      <div class="residence-info">
+        <h2>{{ selectedResidence.name }}</h2>
+        <img
+          [src]="selectedResidence.image"
+          alt="{{ selectedResidence.name }}"
+          width="200"
+          height="150"
+        />
+        <p><strong>Address:</strong> {{ selectedResidence.address }}</p>
+        <p><strong>Status:</strong> {{ selectedResidence.status }}</p>
+  
+        <!-- Icons based on status -->
+        <div>
+          <img
+            *ngIf="selectedResidence.status === 'Disponible'"
+            src="assets/icons/green-icon.png"
+            alt="Disponible"
+            width="48"
+            height="48"
+          />
+          <img
+            *ngIf="selectedResidence.status === 'En Construction'"
+            src="assets/icons/orange-icon.png"
+            alt="En Construction"
+            width="48"
+            height="48"
+          />
+          <img
+            *ngIf="selectedResidence.status === 'Vendu'"
+            src="assets/icons/red-icon.png"
+            alt="Vendu"
+            width="48"
+            height="48"
+          />
+        </div>
+  
+        <!-- Navigation Buttons -->
+        <div class="navigation-buttons">
+          <button 
+            class="btn btn-secondary" 
+            (click)="PreviousResidence()"
+            [disabled]="id === residences[0].id">
+            Previous
+          </button>
+          <button 
+            class="btn btn-primary" 
+            (click)="nextResidence()"
+            [disabled]="id === residences[residences.length - 1].id">
+            Next
+          </button>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Fallback for when no residence is selected -->
+    <ng-template #noResidence>
+      <p>No residence found. Please go back to the list and select a residence.</p>
+      <button class="btn btn-primary" routerLink="/">Back to List</button>
+    </ng-template>
+  </div>
+  
