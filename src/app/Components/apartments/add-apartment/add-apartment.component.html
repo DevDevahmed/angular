@@ -1,1 +1,54 @@
-<p>add-apartment works!</p>
+<div>
+    <h1>Add a New Apartment</h1>
+    
+    <form [formGroup]="apartmentForm" (ngSubmit)="onSubmit()">
+      
+      <div>
+        <label for="apartNum">Apartment Number</label>
+        <input id="apartNum" formControlName="apartNum" placeholder="Enter apartment number" />
+        <div *ngIf="apartmentForm.get('apartNum')?.invalid && apartmentForm.get('apartNum')?.touched">
+          <small *ngIf="apartmentForm.get('apartNum')?.hasError('required')">Apartment number is required.</small>
+          <small *ngIf="apartmentForm.get('apartNum')?.hasError('min')">Apartment number must be greater than 0.</small>
+        </div>
+      </div>
+    
+      <div>
+        <label for="floorNum">Floor Number</label>
+        <input id="floorNum" formControlName="floorNum" placeholder="Enter floor number" />
+        <div *ngIf="apartmentForm.get('floorNum')?.invalid && apartmentForm.get('floorNum')?.touched">
+          <small *ngIf="apartmentForm.get('floorNum')?.hasError('required')">Floor number is required.</small>
+          <small *ngIf="apartmentForm.get('floorNum')?.hasError('min')">Floor number must be greater than 0.</small>
+        </div>
+      </div>
+  
+      <div>
+        <label for="surface">Surface</label>
+        <input id="surface" formControlName="surface" placeholder="Enter surface area" />
+        <div *ngIf="apartmentForm.get('surface')?.invalid && apartmentForm.get('surface')?.touched">
+          <small *ngIf="apartmentForm.get('surface')?.hasError('required')">Surface area is required.</small>
+          <small *ngIf="apartmentForm.get('surface')?.hasError('min')">Surface area must be greater than 0.</small>
+        </div>
+      </div>
+  
+      <div>
+        <label for="category">Category</label>
+        <select id="category" formControlName="category">
+          <option value="Luxury">Luxury</option>
+          <option value="Standard">Standard</option>
+        </select>
+      </div>
+  
+      <div>
+        <label for="terrace">Terrace</label>
+        <input type="checkbox" id="terrace" formControlName="terrace" />
+      </div>
+  
+      <div>
+        <label for="surfaceterrace">Terrace Surface</label>
+        <input id="surfaceterrace" formControlName="surfaceterrace" placeholder="Enter terrace surface" />
+      </div>
+  
+      <button type="submit" [disabled]="apartmentForm.invalid">Add Apartment</button>
+    </form>
+  </div>
+  

@@ -1,1 +1,45 @@
-<p>addresidence works!</p>
+<div>
+    <h1>Add a New Residence</h1>
+    <!-- Use residenceForm instead of residence -->
+    <form [formGroup]="residenceForm" (ngSubmit)="add()">
+      
+      <div>
+        <label for="name">Name:</label>
+        <input id="name" formControlName="name" placeholder="Enter residence name" />
+        <div *ngIf="residenceForm.get('name')?.invalid && residenceForm.get('name')?.touched">
+          <small *ngIf="residenceForm.get('name')?.hasError('required')">Name is required.</small>
+          <small *ngIf="residenceForm.get('name')?.hasError('minlength')">
+            Name must be at least 3 characters long.
+          </small>
+        </div>
+      </div>
+  
+      <div>
+        <label for="address">Address:</label>
+        <input id="address" formControlName="address" placeholder="Enter residence address" />
+        <div *ngIf="residenceForm.get('address')?.invalid && residenceForm.get('address')?.touched">
+          <small *ngIf="residenceForm.get('address')?.hasError('required')">Address is required.</small>
+        </div>
+      </div>
+  
+      <div>
+        <label for="image">Image URL:</label>
+        <input id="image" formControlName="image" placeholder="Enter image URL" />
+        <div *ngIf="residenceForm.get('image')?.invalid && residenceForm.get('image')?.touched">
+          <small *ngIf="residenceForm.get('image')?.hasError('required')">Image is required.</small>
+        </div>
+      </div>
+  
+      <div>
+        <label for="status">Status:</label>
+        <select id="status" formControlName="status">
+          <option value="Disponible">Disponible</option>
+          <option value="Vendu">Vendu</option>
+          <option value="En Construction">En Construction</option>
+        </select>
+      </div>
+  
+      <button type="submit" [disabled]="residenceForm.invalid">Add Residence</button>
+    </form>
+  </div>
+  

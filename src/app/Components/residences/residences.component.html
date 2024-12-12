@@ -1,79 +1,96 @@
 <h1>{{title}}</h1>
 <input type="text" placeholder="Search by address" [(ngModel)]="searchTerm" />
-<button (click)="submitSearch()">Search</button>
-<button (click)="getAllResidences()">Get All Residences</button>
+<button (click)="submitSearch()" class="btn btn-primary">Search</button>
+<button (click)="getAllResidences()" class="btn btn-primary">Get All Residences</button>
+<button routerLink="/addresidence" class="btn btn-primary">Add New Residence</button>
+<button routerLink="/add-apartment" class="btn btn-primary">Add New Apartment</button>
+
+
+<!-- Residences Table -->
 <table class="table">
   <thead>
-  <tr>
-    <th>ID</th>
-    <th>NAME</th>
-    <th>ADDRESSE</th>
-    <th>STATUS</th>
-  </tr>
-  </thead>
-  <tbody>
-   <tr *ngFor="let r of filteredByAdress()">
-
-     <td>{{r.id}}</td>
-     <td>{{r.name}}</td>
-     <td>{{r.address}}</td>
-     <td>{{r.status}}</td>
-      <td><button (click)="submit(r.id)">Submit</button></td>
-     <td><img [src]='r.image' width="50" height="50"></td>
-     <td><button (click)="showLocation(r.address)">Show Location</button></td>
-     <td>
-       <img *ngIf="r.status === 'Disponible'" src="assets/icons/green-icon.png" width="48" height="48">
-       <img *ngIf="r.status === 'En Construction'" src="assets/icons/orange-icon.png" width="48" height="48">
-       <img *ngIf="r.status === 'Vendu'" src="assets/icons/red-icon.png" width="48" height="48">
-     </td>
-     <td>
-      <!-- Emojis based on status -->
-      <span *ngIf="r.status === 'Disponible'">✅</span>
-      <span *ngIf="r.status === 'En Construction'">🚧</span>
-      <span *ngIf="r.status === 'Vendu'">❌</span>
-    </td>
-
-    <td>
-     <button (click)="likeResidence(r)">
-          <span *ngIf="!r.liked">👍 Like</span>
-          <span *ngIf="r.liked">👎 Dislike</span>
-        </button>
-    </td>
-    <button class="btn btn-primary" [routerLink]="['/details', r.id]">Details</button>
-  </tr>
-   <h3>liste des favoris</h3>
-   <table class="table">
-    <thead>
     <tr>
       <th>ID</th>
       <th>NAME</th>
       <th>ADDRESSE</th>
       <th>STATUS</th>
+      <th>ACTIONS</th>
     </tr>
-    </thead>
-    <tbody>
-     <tr *ngFor="let r of favoriteResidences">
-  
-       <td>{{r.id}}</td>
-       <td>{{r.name|uppercase}}</td>
-       <td>{{r.address}}</td>
-       <td>{{r.status}}
+  </thead>
+  <tbody>
+    <tr *ngFor="let r of filteredByAdress()">
+      <td>{{r.id}}</td>
+      <td>{{r.name}}</td>
+      <td>{{r.address}}</td>
+      <td>{{r.status}}</td>
+      <td>
+        <button (click)="submit(r.id)">Submit</button>
+        <button class="btn btn-primary" [routerLink]="['/details', r.id]">Details</button>
+        <button class="btn btn-secondary" [routerLink]="['/apartments', r.id]">
+          View Apartments
+        </button>
+      </td>
+      <td><img [src]='r.image' width="50" height="50"></td>
+      <td><button (click)="showLocation(r.address)">Show Location</button></td>
+      <td>
         <img *ngIf="r.status === 'Disponible'" src="assets/icons/green-icon.png" width="48" height="48">
-         <img *ngIf="r.status === 'En Construction'" src="assets/icons/orange-icon.png" width="48" height="48">
-         <img *ngIf="r.status === 'Vendu'" src="assets/icons/red-icon.png" width="48" height="48">
-       </td>
-        <td><button (click)="submit(r.id)">Submit</button></td>
-       <td><img [src]='r.image' width="50" height="50"></td>
-       <td><button (click)="showLocation(r.address)">Show Location</button></td>
-       
-         
-       <td>
+        <img *ngIf="r.status === 'En Construction'" src="assets/icons/orange-icon.png" width="48" height="48">
+        <img *ngIf="r.status === 'Vendu'" src="assets/icons/red-icon.png" width="48" height="48">
+      </td>
+      <td>
         <!-- Emojis based on status -->
         <span *ngIf="r.status === 'Disponible'">✅</span>
         <span *ngIf="r.status === 'En Construction'">🚧</span>
         <span *ngIf="r.status === 'Vendu'">❌</span>
       </td>
-     </tr>
-</tbody>
+      <td>
+        <button (click)="likeResidence(r)">
+          <span *ngIf="!r.liked">👍 Like</span>
+          <span *ngIf="r.liked">👎 Dislike</span>
+        </button>
+      </td>
+    </tr>
+  </tbody>
 </table>
 
+<!-- Favorites Table -->
+<h3>Liste des Favoris</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>NAME</th>
+      <th>ADDRESSE</th>
+      <th>STATUS</th>
+      <th>ACTIONS</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let r of favoriteResidences">
+      <td>{{r.id}}</td>
+      <td>{{r.name | uppercase}}</td>
+      <td>{{r.address}}</td>
+      <td>
+        {{r.status}}
+        <img *ngIf="r.status === 'Disponible'" src="assets/icons/green-icon.png" width="48" height="48">
+        <img *ngIf="r.status === 'En Construction'" src="assets/icons/orange-icon.png" width="48" height="48">
+        <img *ngIf="r.status === 'Vendu'" src="assets/icons/red-icon.png" width="48" height="48">
+      </td>
+      <td>
+        <button (click)="submit(r.id)">Submit</button>
+        <button class="btn btn-primary" [routerLink]="['/details', r.id]">Details</button>
+        <button class="btn btn-secondary" [routerLink]="['/apartments', r.id]">
+          View Apartments
+        </button>
+      </td>
+      <td><img [src]='r.image' width="50" height="50"></td>
+      <td><button (click)="showLocation(r.address)">Show Location</button></td>
+      <td>
+        <!-- Emojis based on status -->
+        <span *ngIf="r.status === 'Disponible'">✅</span>
+        <span *ngIf="r.status === 'En Construction'">🚧</span>
+        <span *ngIf="r.status === 'Vendu'">❌</span>
+      </td>
+    </tr>
+  </tbody>
+</table>

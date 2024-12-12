@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import {Residence} from "../../Models/Residence";
+import { Form, FormBuilder ,FormGroup,Validators} from '@angular/forms';
+
 
 @Component({
   selector: 'app-residences',
@@ -22,9 +24,13 @@ export class ResidencesComponent {
       "image":"../../assets/images/R4.jpg", status: "En Construction"}
   ];
 
+    
+  
+
   submit(id: number) { alert("Residence id: " + id);
 
   }
+
 
   showLocation(address: string) {
     if (address == "inconnu") {
